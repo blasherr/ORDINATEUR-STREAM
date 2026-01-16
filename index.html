@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SIA OS 2025 - FIB Security System</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- BOOT SCREEN -->
+    <div id="boot-screen" class="screen active">
+        <div class="boot-container">
+            <div class="fib-logo-boot">
+                <img src="FIB-LOGO.png" alt="FIB" class="boot-logo" onerror="this.style.display='none'; document.querySelector('.fib-text-logo').style.display='flex';">
+                <div class="fib-text-logo" style="display:none;">
+                    <div class="fib-shield">
+                        <span>FIB</span>
+                    </div>
+                </div>
+            </div>
+            <div class="boot-text">SIA OS 2025</div>
+            <div class="boot-subtitle">Federal Investigation Bureau - Secure Intelligence Agency</div>
+            <div class="boot-progress">
+                <div class="boot-progress-bar"></div>
+            </div>
+            <div class="boot-status">Initialisation des protocoles de sécurité...</div>
+        </div>
+    </div>
+
+    <!-- LOGIN SCREEN -->
+    <div id="login-screen" class="screen">
+        <div class="login-background"></div>
+        <div class="login-container">
+            <div class="login-title">Federal Investigation Bureau</div>
+            <div class="login-subtitle">Secure Intelligence Agency • Accès Restreint</div>
+            <div class="login-user">
+                <div class="user-avatar"><img src="FIB-LOGO.png" alt="FIB"></div>
+                <div class="user-name">Agent Autorisé</div>
+                <div class="user-role">Niveau d'accréditation: 4</div>
+            </div>
+            <div class="login-form">
+                <input type="password" id="password-input" placeholder="🔒 Entrez votre mot de passe" autocomplete="off">
+                <button id="login-btn">→</button>
+            </div>
+            <div class="login-error" id="login-error">⚠️ Accès refusé - Mot de passe incorrect</div>
+            <div class="login-hint">⚠️ Classification: TOP SECRET</div>
+            <div class="login-security">
+                <div class="security-item">🔒 Chiffrement AES-256</div>
+                <div class="security-item">🛡️ Connexion Sécurisée</div>
+                <div class="security-item">📡 Réseau Isolé</div>
+            </div>
+        </div>
+        <div class="login-time" id="login-time"></div>
+    </div>
+
+    <!-- DESKTOP -->
+    <div id="desktop-screen" class="screen">
+        <div class="desktop-wallpaper"></div>
+        
+        <!-- Top Menu Bar -->
+        <div class="menu-bar">
+            <div class="menu-left">
+                <span class="apple-logo">🍎</span>
+                <span class="menu-item active-app">Finder</span>
+                <span class="menu-item">Fichier</span>
+                <span class="menu-item">Édition</span>
+                <span class="menu-item">Présentation</span>
+            </div>
+            <div class="menu-right">
+                <span class="menu-icon">🔒</span>
+                <span class="menu-icon">📶</span>
+                <span class="menu-icon">🔋</span>
+                <span id="menu-time"></span>
+            </div>
+        </div>
+
+        <!-- Desktop Icons -->
+        <div class="desktop-icons">
+            <div class="desktop-icon" data-folder="communications">
+                <div class="icon-image">📁</div>
+                <div class="icon-label">Communications_Agents</div>
+            </div>
+            <div class="desktop-icon" data-folder="operations">
+                <div class="icon-image">📁</div>
+                <div class="icon-label">Opérations_Classifiées</div>
+            </div>
+            <div class="desktop-icon" data-folder="rapports">
+                <div class="icon-image">📁</div>
+                <div class="icon-label">Rapports_Terrain</div>
+            </div>
+            <div class="desktop-icon" data-app="terminal">
+                <div class="icon-image">💻</div>
+                <div class="icon-label">Terminal SIA</div>
+            </div>
+            <div class="desktop-icon secret-folder" data-folder="topsecret" style="display:none;">
+                <div class="icon-image">🔴</div>
+                <div class="icon-label">CHIMERA_X7</div>
+            </div>
+        </div>
+
+        <!-- Dock -->
+        <div class="dock">
+            <div class="dock-item" data-app="finder">📁</div>
+            <div class="dock-item" data-app="terminal">💻</div>
+            <div class="dock-item" data-app="notes">📝</div>
+            <div class="dock-item" data-app="mail">✉️</div>
+            <div class="dock-item" data-app="trash">🗑️</div>
+        </div>
+    </div>
+
+    <!-- FOLDER WINDOW -->
+    <div id="folder-window" class="window" style="display:none;">
+        <div class="window-header">
+            <div class="window-controls">
+                <span class="control close"></span>
+                <span class="control minimize"></span>
+                <span class="control maximize"></span>
+            </div>
+            <div class="window-title" id="folder-title">Dossier</div>
+        </div>
+        <div class="window-sidebar">
+            <div class="sidebar-item">📁 Documents</div>
+            <div class="sidebar-item">💾 Serveurs</div>
+            <div class="sidebar-item">🔒 Classifié</div>
+        </div>
+        <div class="window-content" id="folder-content">
+            <!-- Content loaded dynamically -->
+        </div>
+    </div>
+
+    <!-- FILE VIEWER -->
+    <div id="file-viewer" class="window" style="display:none;">
+        <div class="window-header">
+            <div class="window-controls">
+                <span class="control close" data-close="file-viewer"></span>
+                <span class="control minimize"></span>
+                <span class="control maximize"></span>
+            </div>
+            <div class="window-title" id="file-title">Document</div>
+        </div>
+        <div class="file-content" id="file-content">
+            <!-- File content loaded dynamically -->
+        </div>
+    </div>
+
+    <!-- TERMINAL -->
+    <div id="terminal-window" class="window" style="display:none;">
+        <div class="window-header terminal-header">
+            <div class="window-controls">
+                <span class="control close" data-close="terminal-window"></span>
+                <span class="control minimize"></span>
+                <span class="control maximize"></span>
+            </div>
+            <div class="window-title">Terminal SIA - bash</div>
+        </div>
+        <div class="terminal-content" id="terminal-content">
+            <div class="terminal-output" id="terminal-output">
+                <div class="terminal-line">SIA Secure Terminal v3.2.1</div>
+                <div class="terminal-line">Connection établie - Serveur: FIB-MAINFRAME-07</div>
+                <div class="terminal-line">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</div>
+                <div class="terminal-line"></div>
+            </div>
+            <div class="terminal-input-line">
+                <span class="terminal-prompt">agent@sia-secure:~$</span>
+                <input type="text" id="terminal-input" autocomplete="off" spellcheck="false">
+            </div>
+        </div>
+    </div>
+
+    <!-- MINI-GAME OVERLAY -->
+    <div id="minigame-overlay" class="overlay" style="display:none;">
+        <div class="minigame-container">
+            <div class="minigame-header">
+                <div class="minigame-title">⚠️ PARE-FEU FIB DÉTECTÉ ⚠️</div>
+                <div class="minigame-subtitle">Bypass Protocol Initialisé - Tapez les caractères rapidement!</div>
+            </div>
+            <div class="minigame-keys" id="minigame-keys">
+                <!-- Keys will be generated here -->
+            </div>
+            <div class="minigame-timer">
+                <div class="timer-bar" id="timer-bar"></div>
+            </div>
+            <div class="minigame-status" id="minigame-status">En attente...</div>
+        </div>
+    </div>
+
+    <!-- HACK SUCCESS OVERLAY -->
+    <div id="hack-success-overlay" class="overlay" style="display:none;">
+        <div class="hack-container">
+            <div class="glitch-text" data-text="HACK RÉUSSI">HACK RÉUSSI</div>
+            <div class="hack-details">
+                <div class="download-animation">
+                    <div class="download-bar" id="download-bar"></div>
+                </div>
+                <div class="download-text" id="download-text">Téléchargement: CHIMERA_X7.enc</div>
+                <div class="packet-info">
+                    <div class="packet-line">📦 Extraction des paquets cryptés...</div>
+                    <div class="packet-line">🔓 Déchiffrement AES-256...</div>
+                    <div class="packet-line">📡 Transfert vers F.A.N Server...</div>
+                    <div class="packet-line success">✅ Mission Accomplie</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MISSION COMPLETE -->
+    <div id="mission-complete" class="overlay" style="display:none;">
+        <div class="mission-container">
+            <div class="mission-badge">🏆</div>
+            <div class="mission-title">MISSION ACCOMPLIE</div>
+            <div class="mission-subtitle">Opération CHIMERA - Succès Total</div>
+            <div class="mission-stats">
+                <div class="stat">Fichiers exfiltrés: 47</div>
+                <div class="stat">Données transférées: 2.3 GB</div>
+                <div class="stat">Temps de mission: <span id="mission-time">00:00</span></div>
+            </div>
+            <button id="restart-btn" class="mission-btn">Nouvelle Mission</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
